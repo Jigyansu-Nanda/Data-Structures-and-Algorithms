@@ -19,16 +19,14 @@ class BubbleSort {
 			}
 			if (swapped == false) {break;}
 		}
-
-		// printing sorted array
 		for (int i=0; i<n; i++) {
 			System.out.print(arr[i]+" ");
 		}
 		System.out.println();
 	}
 
-    public static void main(String[] args) throws IOException {
-        int[] arr = {13, 32, 5, 0, 34, 67};
-        bubbleSort(arr, arr.length);
-    }
+	public static void main(String[] args) throws IOException {
+		int[] arr = {13, 32, 5, 0, 34, 67};
+		bubbleSort(arr, arr.length);
+	}
 }
