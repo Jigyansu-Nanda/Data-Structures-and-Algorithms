@@ -13,14 +13,14 @@ A sorting algorithm is known to be in-place, if no extra space is required for s
  
 ## Algorithms
  - [Normal Sorting Algorithms]
-    - [Bubble Sort]
-    - [Insertion Sort]
-    - [Selection Sort]
-    - [Merge Sort]
-    - Quick Sort
-    - Heap Sort
-    - Counting Sort
-    - Radix Sort
-    - Bucket Sort
+    1. [Bubble Sort](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/05.%20Sorting/01.%20Bubble%20Sort)
+    2. [Insertion Sort]
+    3. [Selection Sort]
+    4. [Merge Sort]
+    5. Quick Sort
+    6. Heap Sort
+    7. Counting Sort
+    8. Radix Sort
+    9. Bucket Sort
  - Hybrid Sorting Algorithms
-    - Tim Sort
+    1. Tim Sort
