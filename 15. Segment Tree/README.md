@@ -10,12 +10,12 @@ Segment Tree is used for **fixed size Arrays** for mainly two types of operation
 ## Representation
  - Internally it is represented as an array.
  - Each Node in the Segment Tree represents sum of elements in a particular range.
-   - Root Node represents sum of all the elements. 
+   - Root Node represents Range Query result of all the elements. 
    - Leaf Nodes represent individual elements (except for psuedo Nodes)
  
 ## Construction
- - We create a root Node (*which will have the value as sum of all the elements*).
- - To get this value, we recursively call for left-half's root and right-half's root, (*because they will have the values of sum of left-half of elements and right-half of elements respectively*) and add the values.
+ - We create a root Node (*which will have the value as Range Query result of all the elements*).
+ - To get this value, we recursively call for left-half's root and right-half's root, (*because they will have the values of Query of left-half of elements and right-half of elements respectively*) and process the values.
  - we finish recursion, when we reach a Node, which has only one element in range, then we return that element.
  - We also want the Segment Tree to have [Binary Heap] property, so that we can call for left-child and right-child. That's why we need our Segment Tree to be a Complete Binary Tree. To make the Segment Tree a Complete Binary Tree:
    - we will create dummy Nodes, which are never going to be accessed.
@@ -26,11 +26,13 @@ Segment Tree is used for **fixed size Arrays** for mainly two types of operation
 ## pseudo code
 ```
       Initialize tree[4n]
+      
       Initialize values: 
         start of the segment (s = 0)
         end of the segment (e = n-1)
         segment tree index (i = 0)
-      buildSegmentTree([ ]tree, [ ]array, s, e, i)
+        
+      buildSegmentTree([ ]tree, [ ]array, s, e, i)    // Segment Tree for Range Sum Queries
         // base case
         if (s == e)
            tree[i] = array[s]
