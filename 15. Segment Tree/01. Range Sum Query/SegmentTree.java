@@ -2,7 +2,7 @@ import java.io.*;
 
 class SegmentTree {
 
-	// constructing Segment Tree
+    // constructing Segment Tree
     static int buildSegmentTree(int[] tree, int[] arr, int start, int end, int index) {
     	// base case
     	if (start == end) {
@@ -20,11 +20,11 @@ class SegmentTree {
     // range query
     /*
     	qs = query start index
-		qe = query end index
-		start, end = starting and ending index of range
-		represented by current node
-		index = index of current node
-	*/
+	qe = query end index
+	start, end = starting and ending index of range
+	represented by current node
+	index = index of current node
+    */
     static int getSum(int[] tree, int qs, int qe, int start, int end, int index) {
     	// current range completely outside of query range
     	if (end < qs || start > qe) {return 0;}
@@ -42,9 +42,9 @@ class SegmentTree {
     	i = index to be updated
     	val = new value at index i
     	diff = new_value - current_value
-		start, end = starting and ending index of range
-		represented by current node
-		index = index of current node
+	start, end = starting and ending index of range
+	represented by current node
+	index = index of current node
     */
 	static void update(int[] arr, int[] tree, int i, int value) {
 		int diff = value-arr[i];
@@ -70,15 +70,15 @@ class SegmentTree {
 	public static void main(String[] args) throws IOException {
 		int[] array = {10,20,30,40};
 		int n = array.length;
-        int size = 4 * n;
-        int[] tree = new int[size];
-        buildSegmentTree(tree, array, 0, n-1, 0);
-        System.out.println(getSum(tree, 0, 2, 0, n-1, 0));
-        System.out.println(getSum(tree, 2, 3, 0, n-1, 0));
-        System.out.println(getSum(tree, 1, 3, 0, n-1, 0));
-        update(array, tree, 1, 25);
-        System.out.println(getSum(tree, 0, 2, 0, n-1, 0));
-        System.out.println(getSum(tree, 2, 3, 0, n-1, 0));
-        System.out.println(getSum(tree, 1, 3, 0, n-1, 0));
+        	int size = 4 * n;
+        	int[] tree = new int[size];
+        	buildSegmentTree(tree, array, 0, n-1, 0);
+        	System.out.println(getSum(tree, 0, 2, 0, n-1, 0));
+        	System.out.println(getSum(tree, 2, 3, 0, n-1, 0));
+        	System.out.println(getSum(tree, 1, 3, 0, n-1, 0));
+        	update(array, tree, 1, 25);
+        	System.out.println(getSum(tree, 0, 2, 0, n-1, 0));
+        	System.out.println(getSum(tree, 2, 3, 0, n-1, 0));
+        	System.out.println(getSum(tree, 1, 3, 0, n-1, 0));
 	}
 }
