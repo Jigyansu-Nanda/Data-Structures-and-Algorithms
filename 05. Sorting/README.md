@@ -12,7 +12,7 @@ A sorting algorithm is known to be in-place, if no extra space is required for s
  - **Not In-place sorting algorithms:** *Merge Sort*
  
 ## Algorithms
- - [Normal Sorting Algorithms]
+ - [Normal Sorting Algorithms](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/05.%20Sorting/01.%20Normal%20Sorting%20Algorithms)
     1. [Bubble Sort](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/05.%20Sorting/01.%20Normal%20Sorting%20Algorithms/01.%20Bubble%20Sort)
     2. [Insertion Sort]
     3. [Selection Sort]
