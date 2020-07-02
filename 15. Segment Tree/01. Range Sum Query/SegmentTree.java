@@ -25,6 +25,7 @@ class SegmentTree {
 
 	static void update(int[] tree, int[] arr, int n, int i, int value) {
 		int diff = value-arr[i];
+		arr[i] = value;
 		updateUtil(tree, i, diff, 0, n-1, 0);
 	}
 
