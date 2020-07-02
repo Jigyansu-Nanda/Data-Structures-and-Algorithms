@@ -23,7 +23,7 @@ class SegmentTree {
     // range query
     /*
     	qs = query start index
-	    qe = query end index
+	qe = query end index
 	start, end = starting and ending index of range
 	represented by current node
 	index = index of current node
@@ -71,8 +71,8 @@ class SegmentTree {
 	}
 
 	public static void main(String[] args) throws IOException {
-		      int[] array = {10,20,30,40};
-		      int n = array.length;
+		int[] array = {10,20,30,40};
+		int n = array.length;
         	int size = 4 * n;
         	int[] tree = new int[size];
         	buildSegmentTree(tree, array, 0, n-1, 0);
@@ -85,3 +85,14 @@ class SegmentTree {
         	System.out.println(getSum(tree, 1, 3, 0, n-1, 0));
 	}
 }
+```
+
+## output
+```
+60
+70
+90
+65
+70
+95
+```
