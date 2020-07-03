@@ -5,7 +5,7 @@
   2. Hashing
   3. String
   4. Searching
-  5. Sorting
+  5. [Sorting](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/05.%20Sorting)
   6. Linked List
   7. Stack
   8. Queue
