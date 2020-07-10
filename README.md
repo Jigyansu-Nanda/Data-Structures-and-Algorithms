@@ -13,7 +13,7 @@
   10. Tree
   11. Binary Search Tree
   12. Heap
-  13. Graph
+  13. [Graph](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/13.%20Graph)
   14. Trie
   15. [Segment Tree](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/15.%20Segment%20Tree)
   16. Disjoint Set
