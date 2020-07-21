@@ -7,3 +7,13 @@
  
  ## Pseudo code
  
+
+## sample input
+```
+                              A
+                          8 /   \ 9
+                            B    C
+                        10 / \3  / 5
+                          D -- E
+                            6
+```
