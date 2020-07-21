@@ -8,7 +8,7 @@
  ## Pseudo code
  
 
-## sample input
+#### input
 ```
                               A
                           8 /   \ 9
@@ -18,7 +18,7 @@
                             6
 ```
 
-## sample output
+#### output
 ```
                               A
                           8 /
