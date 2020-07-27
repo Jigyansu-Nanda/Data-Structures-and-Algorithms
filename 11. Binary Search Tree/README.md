@@ -8,16 +8,15 @@ Binary Search Tree is a node-based binary tree data structure which has the foll
 
 ```java
 static class Node {
-		int data;
-		Node left;
-		Node right;
-		// constructor
-		Node (int data) {
-			this.data = data;
-			this.left = null;
-			this.right = null;
-		}
+	int data;
+	Node left;
+	Node right;
+	Node (int data) {
+		this.data = data;
+		this.left = null;
+		this.right = null;
 	}
+}
 ```
 
 ## Methods implemented:
