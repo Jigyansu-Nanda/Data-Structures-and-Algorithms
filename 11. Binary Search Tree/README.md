@@ -4,6 +4,12 @@ Binary Search Tree is a node-based binary tree data structure which has the foll
  - The right subtree of a node contains only nodes with keys greater than the node’s key.
  - The left and right subtree each must also be a binary search tree.
  
+ 
+## Applications of Binary Search Tree
+ - To maintain a sorted stream of data or sorted set of data
+ - To implement a Doubly Ended Priority Queue
+ - To keep track of smaller/greater/floor/ceil value for inputs in a stream
+ 
 ## Construction
 
 ```java
