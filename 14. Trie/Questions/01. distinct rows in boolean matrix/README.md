@@ -1,5 +1,5 @@
 ### problem statement
-Given a boolean matrix (consisting of 0s and 1s), count number of distinct rows in it.
+**Given a boolean matrix (consisting of 0s and 1s), count number of distinct rows in it.**
 
 #### input
 ```
@@ -35,6 +35,7 @@ Next i lines (1 to m) contain n integers denoting elements of the i-th row.
 1
 ```
 
+#### code
 ```java
 import java.util.*;
 import java.lang.*;
