@@ -70,6 +70,7 @@ class Trie {
 	}
 
 	public static void main(String[] args) {
+		// driver code
 		Node root = new Node();
 		insert(root, "bat");
 		insert(root, "batman");
