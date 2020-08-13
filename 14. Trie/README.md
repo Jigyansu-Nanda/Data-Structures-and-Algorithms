@@ -17,4 +17,4 @@ Trie data structure is well-suited for implementing dictionaries. It is efficien
 
 ### Implementation
  - [Trie implementation using Array](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/14.%20Trie/Implementation/01.%20Trie%20implementation%20using%20Array)
- - [Trie implementation using HashMap]
+ - [Trie implementation using HashMap](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/14.%20Trie/Implementation/02.%20Trie%20implementation%20using%20HashMap)
