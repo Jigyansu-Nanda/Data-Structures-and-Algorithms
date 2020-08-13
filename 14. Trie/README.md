@@ -16,3 +16,5 @@ Trie data structure is well-suited for implementing dictionaries. It is efficien
 | lexicographic ordering | θ(output_length)                 | Not supported                  |
 
 ### Implementation
+ - [Trie implementation using Array](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/14.%20Trie/Implementation/01.%20Trie%20implementation%20using%20Array)
+ - [Trie implementation using HashMap]
