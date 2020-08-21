@@ -7,6 +7,6 @@ Algorithm to perform two operations on disjoint set data structure
   - *find (x)* : Find the representative element of the subset containg x. We use one element of the subset as a representative element, that represents the corresponding subset.
   
 ## Implementation
-  - *Naive implementation*
-  - *union by Rank*
-  - *union by Rank & Find by Path-compression*
+  - Naive implementation
+  - union by Rank
+  - union by Rank & Find by Path-compression
