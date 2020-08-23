@@ -5,7 +5,7 @@
 
 ## Idea behind the algorithm
   1. Sort all the edges in increasing order of their weights
-  2. Initialize: ** MST = { } , MSTweight = 0**
+  2. Initialize: **MST = { } , MSTweight = 0**
   3. For every edge E:
       - while (MST size is less than V-1):
           - if (adding E to MST does not cause a cycle):
