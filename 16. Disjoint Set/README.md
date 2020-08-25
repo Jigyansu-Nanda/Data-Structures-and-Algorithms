@@ -9,4 +9,4 @@ Algorithm to perform two operations on disjoint set data structure
 ## Implementation
   - [Naive implementation](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/16.%20Disjoint%20Set/01.%20Implementation/01.%20Naive%20implementation)
   - [union by Rank](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/16.%20Disjoint%20Set/01.%20Implementation/02.%20union%20by%20rank)
-  - [union by Rank & Find by Path-compression]
+  - [union by Rank & Find by Path-compression](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/16.%20Disjoint%20Set/01.%20Implementation/03.%20union%20by%20rank%20%26%20find%20by%20path%20compression)
