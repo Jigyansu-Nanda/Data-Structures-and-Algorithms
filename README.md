@@ -12,7 +12,7 @@
   9. Deque
   10. Tree
   11. [Binary Search Tree](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/11.%20Binary%20Search%20Tree)
-  12. Heap
+  12. Binary Heap
   13. [Graph](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/13.%20Graph)
   14. Trie
   15. [Segment Tree](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/15.%20Segment%20Tree)
