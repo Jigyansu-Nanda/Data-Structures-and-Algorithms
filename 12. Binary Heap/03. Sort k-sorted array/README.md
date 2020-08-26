@@ -1,7 +1,23 @@
 # Sort a K-sorted array
 **K-sorted array**: An element at index i will be present between the indexes i-k to i+k in the sorted array.
 
-## expected time complexity: O(n log k)
+#### expected time complexity: O(n log k)
+
+
+**sample input**
+```
+2
+6 2
+9 8 7 18 19 17
+8 4
+10 9 7 8 4 70 50 60
+```
+
+**sample output**
+```
+7 8 9 17 18 19 
+4 7 8 9 10 50 60 70 
+```
 
 ### code
 ```java
@@ -45,19 +61,4 @@ class Heap {
 		}
 	}
 }
-```
-
-### sample input
-```
-2
-6 2
-9 8 7 18 19 17
-8 4
-10 9 7 8 4 70 50 60
-```
-
-### sample output
-```
-7 8 9 17 18 19 
-4 7 8 9 10 50 60 70 
 ```
