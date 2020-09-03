@@ -1,5 +1,20 @@
 # Given a Directed Cyclic Graph, print it's Topological Sort
 
+### Pseudo Code
+```
+1. store indegree of every vertex
+2. create a Queue (say, q)
+3. add all 0 indegree vertices to q
+4. initialize count as 0
+5. while (q is not empty)
+      a. current_vertex = q.poll()
+      b. print current_vertex
+      c. for every adjacent vertex of current_vertex
+            1. reduce it's indegree
+            2. if indegree becomes 0, add it to the queue
+```
+
+### code
 ```java
 import java.io.*;
 import java.util.*;
