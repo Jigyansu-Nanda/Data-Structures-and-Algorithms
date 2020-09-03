@@ -1,6 +1,6 @@
 # Topological Sorting using DFS
 
-## pseudo code
+## Pseudo code
 ```
 // DFS
 1. mark source as visited
@@ -25,69 +25,77 @@ import java.util.*;
 
 class Graph {
 
-	static void addEdge(ArrayList<ArrayList<Integer>> graph, int u, int v) {
-		graph.get(u).add(v);
-	}
+	ArrayList<ArrayList<Integer>> graph;
+	int v;
+	int e;
 
-	static void printGraph(ArrayList<ArrayList<Integer>> graph) {
-		for (int i=0; i<graph.size(); i++) {
-			System.out.print(i+" --> ");
-			for (int j=0; j<graph.get(i).size(); j++) {
-				System.out.print(graph.get(i).get(j)+" ");
-			}
-			System.out.println();
+	public Graph (int v, int e, int[][] edges) {
+		this.v = v;
+		this.e = e;
+		this.graph = new ArrayList<ArrayList<Integer>>();
+		for (int i=0; i<v; i++) {
+			graph.add(new ArrayList<Integer>());
+		}
+		for (int i=0; i<e; i++) {
+			int src = edges[i][0];
+			int dst = edges[i][1];
+			addEdge(src, dst);
 		}
 	}
 
-	static void DFS(ArrayList<ArrayList<Integer>> graph, int src, boolean[] visited, Stack<Integer> st) {
-		visited[src] = true;
-		for (int next: graph.get(src)) {
-			if (visited[next] == false) {
-				DFS(graph, next, visited, st);
-			}
-		}
-		st.push(src);
+	void addEdge (int src, int dst) {
+		graph.get(src).add(dst);
 	}
 
-	static void TopoSortDFS(ArrayList<ArrayList<Integer>> graph, int v) {
-		Stack<Integer> st = new Stack<Integer>();
+	void topologicalSort () {
 		boolean[] visited = new boolean[v];
+		Stack<Integer> st = new Stack<Integer>();
 		for (int i=0; i<v; i++) {
 			if (visited[i] == false) {
-				DFS(graph, i, visited, st);
+				dfs(i, visited, st);
 			}
 		}
-		while (!st.isEmpty()) {
+		while (st.isEmpty() == false) {
 			System.out.print(st.pop()+" ");
 		}
 		System.out.println();
 	}
 
-	public static void main(String[] args) throws IOException {
-		// v = number of vertices
-		int v = 5;
-		ArrayList<ArrayList<Integer>> graph = new ArrayList<ArrayList<Integer>>();
-		for (int i=0; i<v; i++) {
-			graph.add(new ArrayList<Integer>());
+	void dfs (int src, boolean[] visited, Stack<Integer> st) {
+		visited[src] = true;
+		for (int adj : graph.get(src)) {
+			if (visited[adj] == false) {
+				dfs(adj, visited, st);
+			}
 		}
-		addEdge(graph, 0, 1);
-		addEdge(graph, 0, 3);
-		addEdge(graph, 2, 1);
-		addEdge(graph, 2, 4);
-		printGraph(graph);
-		System.out.println();
-		TopoSortDFS(graph, v);
+		st.push(src);
 	}
+}
+
+class TopologicalSort {
+	
+	public static void main (String[] args) throws IOException {
+		int v = 5;
+		int e = 5;
+		int[][] edges = new int[5][2];
+		edges[0][0] = 0;
+		edges[0][1] = 1;
+		edges[1][0] = 1;
+		edges[1][1] = 3;
+		edges[2][0] = 2;
+		edges[2][1] = 3;
+		edges[3][0] = 2;
+		edges[3][1] = 4;
+		edges[4][0] = 3;
+		edges[4][1] = 4;
+		Graph graph = new Graph(v, e, edges);
+		graph.topologicalSort();
+	}
+
 }
 ```
 
 ## output
 ```
-0 --> 1 3 
-1 --> 
-2 --> 1 4 
-3 --> 
-4 --> 
-
-2 4 0 3 1 
+2 0 1 3 4
 ```
