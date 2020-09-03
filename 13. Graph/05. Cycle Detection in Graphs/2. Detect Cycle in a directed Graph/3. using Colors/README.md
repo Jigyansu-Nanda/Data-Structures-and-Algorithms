@@ -1,11 +1,12 @@
 ## Given a directed graph, check whether a cycle exists or not in it.
 We will perform simple DFS on graph starting from any node. During DFS, we will maintain a color array to represent different state of node. 
-  - color 0: unvisited
-  - color 1: visited but descendants are still being processed
-  - color 2: visited and all of it's descendants are processed
+  - **color 0**: unvisited
+  - **color 1**: visited but descendants are still being processed
+  - **color 2**: visited and all of it's descendants are processed
 If at any time any adjacent node of current node, that is being processed, has color 1, we will know that there is a cycle
 
 ### Advantages of using colors
+ - This method takes less space than other methods (Kahn's BFS based, Recursion Stack based).
  - This method can be used to find number of cycles in the graph.
  - This method can be used print any or all the cycles in the graph.
  
