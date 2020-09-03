@@ -8,7 +8,7 @@ If at any time any adjacent node of current node, that is being processed, has c
 ### Advantages of using colors
  - This method takes less space than other methods (Kahn's BFS based, Recursion Stack based).
  - This method can be used to find number of cycles in the graph.
- - This method can be used print any or all the cycles in the graph.
+ - This method can be used print any or all the cycles in an undirected graph.
  
 ### Code
 ```java
