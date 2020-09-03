@@ -6,77 +6,116 @@ import java.util.*;
 
 class Graph {
 
-	static void addEdge(ArrayList<ArrayList<Integer>> graph, int u, int v) {
-		graph.get(u).add(v);
-	}
+	ArrayList<ArrayList<Integer>> graph;
+	int v;
+	int e;
 
-	static void printGraph(ArrayList<ArrayList<Integer>> graph) {
-		for (int i=0; i<graph.size(); i++) {
-			System.out.print(i+" --> ");
-			for (int j=0; j<graph.get(i).size(); j++) {
-				System.out.print(graph.get(i).get(j)+" ");
-			}
-			System.out.println();
+	public Graph (int v, int e, int[][] edges) {
+		this.v = v;
+		this.e = e;
+		this.graph = new ArrayList<ArrayList<Integer>>();
+		for (int i=0; i<v; i++) {
+			graph.add(new ArrayList<Integer>());
+		}
+		for (int i=0; i<e; i++) {
+			int src = edges[i][0];
+			int dst = edges[i][1];
+			addEdge(src, dst);
 		}
 	}
 
-	static boolean DFSutil(ArrayList<ArrayList<Integer>> graph, int src, boolean[] visited, boolean[] recStack) {
+	void addEdge (int src, int dst) {
+		graph.get(src).add(dst);
+	}
+
+	boolean isCycle () {
+		boolean[] visited = new boolean[v];
+		boolean[] recStack = new boolean[v];
+		for (int i=0; i<v; i++) {
+			if (visited[i] == false) {
+				if (dfs(i, visited, recStack) == true) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	boolean dfs (int src, boolean[] visited, boolean[] recStack) {
 		visited[src] = true;
 		recStack[src] = true;
-		for (int next: graph.get(src)) {
-			if (visited[next]==false && DFSutil(graph, next, visited, recStack)) {
+		for (int adj : graph.get(src)) {
+			if (!visited[adj] && dfs(adj, visited, recStack)) {
 				return true;
 			}
-			else if (recStack[next] == true) {
+			else if (recStack[adj]) {
 				return true;
 			}
 		}
 		recStack[src] = false;
 		return false;
 	}
+}
 
-	static boolean DFS(ArrayList<ArrayList<Integer>> graph, int v) {
-		boolean[] visited = new boolean[v];
-		// to identify back edges in recursion call stack
-		boolean[] recStack = new boolean[v];
-		for (int i=0; i<v; i++) {
-			if (visited[i] == false) {
-				if (DFSutil(graph, i, visited, recStack)==true) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}	
-
-	public static void main(String[] args) throws IOException {
-		// v = number of vertices
+class Solution {
+	
+	public static void main (String[] args) throws IOException {
 		int v = 6;
-		ArrayList<ArrayList<Integer>> graph = new ArrayList<ArrayList<Integer>>();
-		for (int i=0; i<v; i++) {
-			graph.add(new ArrayList<Integer>());
-		}
-		addEdge(graph, 0, 1);
-		addEdge(graph, 2, 1);
-		addEdge(graph, 2, 3);
-		addEdge(graph, 3, 4);
-		addEdge(graph, 4, 5);
-		addEdge(graph, 5, 3);
-		printGraph(graph);
-		System.out.println();
-		System.out.println(DFS(graph, v));
+		int e = 7;
+		int[][] edges = new int[e][2];
+		edges[0][0] = 0;
+		edges[0][1] = 1;
+		edges[1][0] = 1;
+		edges[1][1] = 2;
+		edges[2][0] = 2;
+		edges[2][1] = 3;
+		edges[3][0] = 3;
+		edges[3][1] = 4;
+		edges[4][0] = 4;
+		edges[4][1] = 5;
+		edges[5][0] = 5;
+		edges[5][1] = 3;
+		edges[6][0] = 5;
+		edges[6][1] = 2;
+		Graph graph = new Graph(v, e, edges);
+		String res = graph.isCycle() ? "Cycle exists" : "Cycle does not exist";
+		System.out.println(res);
+
+		// int v = 4;
+		// int e = 4;
+		// int[][] edges = new int[e][2];
+		// edges[0][0] = 0;
+		// edges[0][1] = 1;
+		// edges[1][0] = 1;
+		// edges[1][1] = 2;
+		// edges[2][0] = 3;
+		// edges[2][1] = 1;
+		// edges[3][0] = 2;
+		// edges[3][1] = 3;
+		// Graph graph = new Graph(v, e, edges);
+		// String res = graph.isCycle() ? "Cycle exists" : "Cycle does not exist";
+		// System.out.println(res);
+
+		// int v = 4;
+		// int e = 4;
+		// int[][] edges = new int[e][2];
+		// edges[0][0] = 0;
+		// edges[0][1] = 1;
+		// edges[1][0] = 2;
+		// edges[1][1] = 1;
+		// edges[2][0] = 1;
+		// edges[2][1] = 3;
+		// edges[3][0] = 2;
+		// edges[3][1] = 3;
+		// Graph graph = new Graph(v, e, edges);
+		// String res = graph.isCycle() ? "Cycle exists" : "Cycle does not exist";
+		// System.out.println(res);
 	}
+
 }
 ```
 
 ## output
 ```
-0 --> 1 
-1 --> 
-2 --> 1 3 
-3 --> 4 
-4 --> 5 
-5 --> 3 
-
-true
+Cycle exists
 ```
