@@ -17,3 +17,4 @@
   14. Trie
   15. [Segment Tree](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/15.%20Segment%20Tree)
   16. Disjoint Set
+  17. Binary Indexed Tree (Fenwick Tree)
