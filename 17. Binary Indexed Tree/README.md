@@ -4,7 +4,7 @@
     - Update a value: *O(log n) for each query*
 - It is internally represented as an array.
 - It requires **O(n log n) preprocessing time** and **θ(n) auxiliary space**.
-- It is also known as Fenwick Tree.
+- It is also known as **Fenwick Tree**.
   
 ## Implementation
   - The basic idea behind BIT is that every number can be represented as sum of powers of 2.
