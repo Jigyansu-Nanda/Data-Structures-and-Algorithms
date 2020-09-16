@@ -45,6 +45,34 @@ class Trie {
 		curr.isEnd = true;
 	}
 
+	boolean isEmpty (Node node) {
+		return (node.child.size() == 0);
+	}
+
+	void delete (String word) {
+		node = deleteRec(node, word, 0);
+	}
+
+	Node deleteRec (Node node, String word, int l) {
+		if (node == null) {return null;}
+		if (l == word.length()) {
+			node.isEnd = false;
+			if (isEmpty(node)) {return null;}
+			return node;
+		}
+		char c = word.charAt(l);
+		Node temp = deleteRec(node.child.get(c), word, l+1);
+		if (temp == null) {
+			node.child.remove(c);
+		}
+		else {
+			node.child.put(c, temp);
+		}
+		if (isEmpty(node) && node.isEnd == false) {
+			return null;
+		}
+		return node;
+	}
 }
 
 class Main {
@@ -55,6 +83,15 @@ class Main {
 		for (String word: dictionary) {
 			trie.insert(word);
 		}
+		System.out.println(trie.search("bat"));
+		trie.delete("batman");
+		System.out.println(trie.search("batman"));
+		System.out.println(trie.search("bat"));
+		trie.insert("batman");
+		trie.delete("bat");
+		System.out.println(trie.search("batman"));
 	}
 
 }
+
+
