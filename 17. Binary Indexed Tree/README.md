@@ -22,7 +22,7 @@
     - **Range Update & Range Query**
     
 ## prefix sum implementation
-```
+```java
 import java.io.*;
 import java.util.*;
 
