@@ -1,4 +1,4 @@
-# Binary Indexed Tree
+# Binary Indexed Tree / Fenwick Tree
 - BIT is used for fixed-size input array and multiple queries of following types.
     - Prefix Operations (Sum, Product, XOR, OR etc..): *O(log n) for each query*
     - Update a value: *O(log n) for each query*
