@@ -11,3 +11,9 @@
   - for any prefix query till range i:
     - prefixOpQuery(i) performs prefix operation till index i (total i+1 elements)
     - We can divide these (i+1) elements in different ranges, that are all powers of 2.
+  - A fenwick tree can support the following range operations in logarithmic time:
+    - **Point Update & Range Query**
+    - **Range Update & Point Query**
+    - **Range Update & Range Query**
+    
+## Prefix Sum Implementation
