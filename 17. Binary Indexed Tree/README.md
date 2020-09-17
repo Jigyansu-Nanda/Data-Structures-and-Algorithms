@@ -13,7 +13,11 @@
     - We can divide these (i+1) elements in different ranges, that are all powers of 2.
   - A fenwick tree can support the following range operations in logarithmic time:
     - **Point Update & Range Query**
+        - standard Fenwick Tree implementation
     - **Range Update & Point Query**
+        - Range Update from l to r:
+            - rangeUpdate(l, r, value): pointUpdate(l, currDifference) -> pointUpdate(r+1, -currDifference)
+        - Point Query:
+            - pointQuery(l): rangeQuery(l) - rangeQuery(l-1)
     - **Range Update & Range Query**
     
-## Prefix Sum Implementation
