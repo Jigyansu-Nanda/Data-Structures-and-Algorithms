@@ -1,4 +1,4 @@
-### problem statement
+### Problem statement
 **Given a boolean matrix (consisting of 0s and 1s), count number of distinct rows in it.**
 
 #### input
