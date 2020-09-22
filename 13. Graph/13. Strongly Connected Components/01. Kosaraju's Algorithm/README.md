@@ -106,6 +106,25 @@ public class Main {
 }
 ```
 
+## input
+```
+First line contains an integer denoting number of test cases (t).
+First line of each test case contains two space separated integers (v, number of vertices and e, number of edges)
+Next e lines contains two integers denoting i and j such that there is a directed edge from i to j
+
+2
+4 4
+0 1
+1 3
+3 0
+1 2
+5 5
+0 1
+1 2
+2 0
+1 3
+3 4
+```
 ## output
 ```
 Total number of strongly connected components are: 2
