@@ -28,7 +28,7 @@
 
 #### Implementation Pseudo Code
 ```java
-  import java.io.*;
+import java.io.*;
 import java.util.*;
 
 class Pair implements Comparable<Pair> {
