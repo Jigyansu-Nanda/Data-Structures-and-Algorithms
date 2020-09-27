@@ -45,6 +45,7 @@ class SegmentTree {
 
 	void update (int[] arr, int index, int value) {
 		int diff = value - arr[index];
+		arr[index] = value;
 		updateRec(index, diff, 0, n-1, 0);
 	}
 
