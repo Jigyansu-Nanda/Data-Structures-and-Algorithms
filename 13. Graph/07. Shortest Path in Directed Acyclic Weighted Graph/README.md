@@ -51,8 +51,8 @@ class Graph {
 	}
 
 	void shortestPath (int src) {
-		int[] distance = new int[v];
-		Arrays.fill(distance, Integer.MAX_VALUE);
+		long[] distance = new long[v];
+		Arrays.fill(distance, (long) Integer.MAX_VALUE);
 		distance[src] = 0;
 		Stack<Integer> stack = new Stack<>();
 		boolean[] visited = new boolean[v];
@@ -64,8 +64,8 @@ class Graph {
 		while (!stack.isEmpty()) {
 			int curr = stack.pop();
 			for (Pair adj: graph.get(curr)) {
-				if (distance[adj.x] > distance[curr] + adj.y) {
-					distance[adj.x] = distance[curr] + adj.y;
+				if (distance[adj.x] > distance[curr] + (long) adj.y) {
+					distance[adj.x] = distance[curr] + (long) adj.y;
 				}
 			}
 		}
