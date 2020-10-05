@@ -39,92 +39,80 @@ Dijkstra(graph, s):
 import java.io.*;
 import java.util.*;
 
+class Pair implements Comparable <Pair> {
+
+	int x;
+	long y;
+
+	Pair (int x, long y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	@Override
+	public int compareTo (Pair pair) {
+		return (int) (this.y - pair.y);
+	}
+}
+
 class Graph {
 
-	static class Pair {
-		String vertex;
-		int weight;
-		Pair(String vertex, int weight) {
-			this.vertex = vertex;
-			this.weight = weight;
+	int v;
+	ArrayList<ArrayList<Pair>> graph;
+
+	Graph (int v) {
+		this.v = v;
+		this.graph = new ArrayList<ArrayList<Pair>>();
+		for (int i=0; i<v; i++) {
+			graph.add(new ArrayList<Pair>());
 		}
 	}
 
-	static void addEdge(HashMap<String, ArrayList<Pair>> graph, String u, String v, int weight, boolean biDirectional) {
-		if (!graph.containsKey(u)) {
-			graph.put(u, new ArrayList<Pair>());
-		}
-		graph.get(u).add(new Pair(v, weight));
-		if (biDirectional == true) {
-			if (!graph.containsKey(v)) {
-				graph.put(v, new ArrayList<Pair>());
-			}
-			graph.get(v).add(new Pair(u, weight));
-		}
+	void addEdge (int src, int dst, long weight) {
+		graph.get(src).add(new Pair(dst, weight));
+		graph.get(dst).add(new Pair(src, weight));
 	}
 
-	static class Vertex {
-		String node;
-		int distance;
-		Vertex(String node, int distance) {
-			this.node = node;
-			this.distance = distance;
-		}
-	}
-
-	static class DistComparator implements Comparator<Vertex> {
-		public int compare(Vertex v1, Vertex v2) {
-			if (v1.distance < v2.distance) {return -1;}
-			else if (v1.distance > v2.distance) {return 1;}
-			else {return 0;}
-		}
-	}
-
-	static void Dijkstra(HashMap<String, ArrayList<Pair>> graph, String src) {
-		HashMap<String, Integer> dist = new HashMap<String, Integer>();
-		int size = graph.size();
-		PriorityQueue<Vertex> pq = new PriorityQueue<Vertex>(size, new DistComparator());
-		for (String u: graph.keySet()) {
-			if (u.equals(src)) {
-				pq.add(new Vertex(u, 0));
-				dist.put(u, 0);
-			}else {
-				pq.add(new Vertex(u, Integer.MAX_VALUE));
-				dist.put(u, Integer.MAX_VALUE);
-			}
-		}
+	void dijkstra (int src) {
+		long[] distance = new long[v];
+		Arrays.fill(distance, (long) Integer.MAX_VALUE);
+		distance[src] = 0;
+		PriorityQueue<Pair> pq = new PriorityQueue<Pair>();
+		pq.add(new Pair(src, 0));
 		while (!pq.isEmpty()) {
-			Vertex u = pq.poll();
-			for (Pair p: graph.get(u.node)) {
-				if (dist.get(p.vertex) > dist.get(u.node)+p.weight) {
-					Vertex curr = new Vertex(p.vertex, dist.get(p.vertex));
-					pq.remove(curr);
-					dist.put(p.vertex, dist.get(u.node)+p.weight);
-					pq.add(new Vertex(p.vertex, dist.get(u.node)+p.weight));
+			Pair curr = pq.poll();
+			for (Pair adj: graph.get(curr.x)) {
+				if (distance[adj.x] > distance[curr.x] + adj.y) {
+					distance[adj.x] = distance[curr.x] + adj.y;
+					pq.add(new Pair(adj.x, distance[adj.x]));
 				}
 			}
 		}
-		for (String s: graph.keySet()) {
-			System.out.println("Shortest distance from "+src+" to "+s+" is "+dist.get(s));
+		for (int i=0; i<v; i++) {
+			System.out.println("Shortest Distance from "+src+" to "+i+" is: "+distance[i]);
 		}
-	} 
+	}
+}
+
+class Main {
 
 	public static void main(String[] args) throws IOException {
-		HashMap<String, ArrayList<Pair>> graph = new HashMap<String, ArrayList<Pair>>();
-		addEdge(graph, "A", "B", 5, true);
-		addEdge(graph, "A", "C", 10, true);
-		addEdge(graph, "B", "C", 3, true);
-		addEdge(graph, "B", "D", 20, true);
-		addEdge(graph, "C", "D", 2, true);
-		Dijkstra(graph, "A");
+		int v = 4;
+		Graph graph = new Graph(v);
+		graph.addEdge(0, 1, 5);
+		graph.addEdge(1, 2, 3);
+		graph.addEdge(0, 2, 10);
+		graph.addEdge(1, 3, 20);
+		graph.addEdge(2, 3, 2);
+		graph.dijkstra(0);
 	}
 }
 ```
 
 ## output
 ```
-Shortest distance from A to A is 0
-Shortest distance from A to B is 5
-Shortest distance from A to C is 8
-Shortest distance from A to D is 10
+Shortest distance from 0 to 0 is: 0
+Shortest distance from 0 to 1 is: 5
+Shortest distance from 0 to 2 is: 8
+Shortest distance from 0 to 3 is: 10
 ```
