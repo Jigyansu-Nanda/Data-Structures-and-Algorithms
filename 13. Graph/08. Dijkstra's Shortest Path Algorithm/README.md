@@ -24,14 +24,14 @@ Dijkstra(graph, s):
     Create an empty Priority Queue (Min Heap), pq
     Intialize distance[v] = {INF, INF, INF, INF, INF,........}
     distance[s] = 0
-    Insert all distance to Priority Queue pq                           // O(V) time
-    while pq is not empty:                                             // loop runs V times
-          u = pq.extractMin( )                                         // O(log V) time, overall time O(Vlog V) time
+    Insert (s, distance[s]) Priority Queue pq                        // O(V) time
+    while pq is not empty:                                           // loop runs V times
+          u = pq.extractMin( )                                       // O(log V) time, overall time O(Vlog V) time
           for (all v: adjacent of u):
                 if (distance[v] > distance[u] + weight(u, v)):
-                      distance[v] = distance[u] + weight(u, v)         // overall time O(Elog V)
+                      distance[v] = distance[u] + weight(u, v)       // overall time O(Elog V)
                                   
-                                                                       // overall Time Complexity: O(Vlog V + Elog V)
+                                                                     // overall Time Complexity: O(Vlog V + Elog V)
 ```
 
 ## code
@@ -75,7 +75,7 @@ class Graph {
 
 	void dijkstra (int src) {
 		long[] distance = new long[v];
-		Arrays.fill(distance, (long) Integer.MAX_VALUE);
+		Arrays.fill(distance, Integer.MAX_VALUE);
 		distance[src] = 0;
 		PriorityQueue<Pair> pq = new PriorityQueue<Pair>();
 		pq.add(new Pair(src, 0));
