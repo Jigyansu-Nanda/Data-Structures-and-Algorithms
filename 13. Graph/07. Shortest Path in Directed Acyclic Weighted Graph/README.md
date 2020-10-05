@@ -6,8 +6,7 @@
 
 ### Pseudo code
 ```
-  ShortestPath(graph, src)
-  {
+  ShortestPath(graph, src) {
       Initialize distance[v] = {INF, INF, INF, INF, INF............}
       distance[src] = 0
       Find a Topological-Sort of the graph
@@ -23,93 +22,92 @@
 import java.io.*;
 import java.util.*;
 
+class Pair {
+
+	int x;
+	int y;
+
+	Pair (int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+}
+
 class Graph {
 
-	static class Pair {
-		int node;
-		int weight;
-		Pair(int node, int weight) {
-			this.node = node;
-			this.weight = weight;
-		}
-	}
+	int v;
+	ArrayList<ArrayList<Pair>> graph;
 
-	static void addEdge(HashMap<Integer, ArrayList<Pair>> graph, int u, int v, int weight) {
-		graph.get(u).add(new Pair(v, weight));
-	}
-
-	// Finding Topological Sort
-	static ArrayList<Integer> TopoLogicalSort(HashMap<Integer, ArrayList<Pair>> graph, int v) {
-		int[] indegree = new int[v];
+	Graph (int v) {
+		this.v = v;
+		this.graph = new ArrayList<ArrayList<Pair>>();
 		for (int i=0; i<v; i++) {
-			for (Pair p: graph.get(i)) {
-				indegree[p.node]++;
-			}
+			graph.add(new ArrayList<Pair>());
 		}
-		ArrayList<Integer> topoSort = new ArrayList<Integer>();
-		Queue<Integer> q = new LinkedList<Integer>();
-		for (int i=0; i<v; i++) {
-			if (indegree[i] == 0) {
-				q.add(i);
-			}
-		}
-		while (!q.isEmpty()) {
-			int p = q.poll();
-			topoSort.add(p);
-			for (Pair curr: graph.get(p)) {
-				indegree[curr.node]--;
-				if (indegree[curr.node] == 0) {
-					q.add(curr.node);
-				}
-			}
-		}
-		return topoSort;
 	}
 
-	// Shortest Path in DAG
-	static void ShortestPathDAG(HashMap<Integer, ArrayList<Pair>> graph, ArrayList<Integer> topoSort, int src) {
-		int[] distance = new int[graph.size()];
+	void addEdge (int src, int dst, int weight) {
+		graph.get(src).add(new Pair(dst, weight));
+	}
+
+	void shortestPath (int src) {
+		int[] distance = new int[v];
 		Arrays.fill(distance, Integer.MAX_VALUE);
 		distance[src] = 0;
-		for (int u: topoSort) {
-			for (Pair adj: graph.get(u)) {
-				if (distance[adj.node] > distance[u] + adj.weight) {
-					distance[adj.node] = distance[u] + adj.weight;
+		Stack<Integer> stack = new Stack<>();
+		boolean[] visited = new boolean[v];
+		for (int i=0; i<v; i++) {
+			if (visited[i] == false) {
+				dfs(i, stack, visited);
+			}
+		}
+		while (!stack.isEmpty()) {
+			int curr = stack.pop();
+			for (Pair adj: graph.get(curr)) {
+				if (distance[adj.x] > distance[curr] + adj.y) {
+					distance[adj.x] = distance[curr] + adj.y;
 				}
 			}
 		}
-		for (int i=0; i<graph.size(); i++) {
-			System.out.println("Shortest distance from "+src+" to "+distance[i]);
+		for (int i=0; i<v; i++) {
+			System.out.println("Shortest Distance from "+src+" to "+i+" is "+distance[i]);
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-		// v = number of vertices
-		int v = 6;
-		HashMap<Integer, ArrayList<Pair>> graph = new HashMap<Integer, ArrayList<Pair>>();
-		for (int i=0; i<v; i++) {
-			graph.put(i, new ArrayList<Pair>());
+	void dfs (int src, Stack<Integer> stack, boolean[] visited) {
+		visited[src] = true;
+		for (Pair adj: graph.get(src)) {
+			if (visited[adj.x] == false) {
+				dfs(adj.x, stack, visited);
+			}
 		}
-		addEdge(graph, 0, 1, 2);
-		addEdge(graph, 1, 2, 3);
-		addEdge(graph, 2, 3, 6);
-		addEdge(graph, 0, 4, 1);
-		addEdge(graph, 4, 2, 2);
-		addEdge(graph, 4, 5, 4);
-		addEdge(graph, 5, 3, 1);
-		int src = 0;
-		ArrayList<Integer> topoSort = TopoLogicalSort(graph, v);
-		ShortestPathDAG(graph, topoSort, src);
+		stack.push(src);
+	}
+}
+
+class Main {
+
+	public static void main(String[] args) throws IOException {
+		int v = 6;
+		Graph graph = new Graph(v);
+		graph.addEdge(0, 1, 2);
+		graph.addEdge(1, 2, 3);
+		graph.addEdge(2, 3, 6);
+		graph.addEdge(0, 4, 1);
+		graph.addEdge(4, 2, 2);
+		graph.addEdge(4, 5, 4);
+		graph.addEdge(5, 3, 1);
+		graph.shortestPath(0);
 	}
 }
 ```
 
 ## output
 ```
-Shortest distance from 0 to 0
-Shortest distance from 0 to 2
-Shortest distance from 0 to 3
-Shortest distance from 0 to 6
-Shortest distance from 0 to 1
-Shortest distance from 0 to 5
+Shortest Distance from 0 to 0 is 0
+Shortest Distance from 0 to 1 is 2
+Shortest Distance from 0 to 2 is 3
+Shortest Distance from 0 to 3 is 6
+Shortest Distance from 0 to 4 is 1
+Shortest Distance from 0 to 5 is 5
 ```
