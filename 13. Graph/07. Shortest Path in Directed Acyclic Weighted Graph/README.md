@@ -17,7 +17,7 @@
   }
 ```
 
-### Code
+### Implementation
 ```java
 import java.io.*;
 import java.util.*;
