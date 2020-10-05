@@ -34,7 +34,7 @@ Dijkstra(graph, s):
                                                                      // overall Time Complexity: O(Vlog V + Elog V)
 ```
 
-## code
+## Implementation
 ```java
 import java.io.*;
 import java.util.*;
