@@ -68,7 +68,6 @@ class Graph {
 
 	void addEdge (int src, int dst, long weight) {
 		graph.get(src).add(new Pair(dst, weight));
-		// graph.get(dst).add(new Pair(src, weight));
 	}
 
 	void bellmanFord (int src) {
