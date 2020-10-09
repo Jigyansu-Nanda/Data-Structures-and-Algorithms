@@ -28,9 +28,9 @@ import java.util.*;
 
 class FenwickTree {
 
-	int[] tree;
-	int[] arr;
 	int n;
+	int[] arr;
+	int[] tree;
 
 	FenwickTree (int[] arr) {
 		this.arr = arr;
@@ -43,6 +43,16 @@ class FenwickTree {
 		for (int i=0; i<n; i++) {
 			updateTree(i, arr[i]);
 		}
+	}
+
+	int getSum (int index) {
+		index += 1;
+		int sum = 0;
+		while (index > 0) {
+			sum += tree[index];
+			index = index - (index & (-index));
+		}
+		return sum;
 	}
 
 	void update (int index, int value) {
@@ -58,24 +68,18 @@ class FenwickTree {
 			index = index + (index & (-index));
 		}
 	}
+}
 
-	int getSum (int index) {
-		index += 1;
-		int sum = 0;
-		while (index > 0) {
-			sum += tree[index];
-			index = index - (index & (-index));
-		}
-		return sum;
-	}
-
+public class Main {
+	
 	public static void main(String[] args) throws IOException {
-		int[] array = {10, 20, 30, 40, 50, 60};
-		FenwickTree tree = new FenwickTree(array);
-		System.out.println(tree.getSum(2));
+		int[] arr = new int[] {10, 20, 30, 40, 50, 60};
+		FenwickTree tree = new FenwickTree(arr);
 		System.out.println(tree.getSum(4));
-		tree.update(3, 45);
+		System.out.println(tree.getSum(3));
+		tree.update(4, 0);
 		System.out.println(tree.getSum(4));
+		System.out.println(tree.getSum(3));
 		System.out.println(tree.getSum(5));
 	}
 }
@@ -83,8 +87,9 @@ class FenwickTree {
 
 ## output
 ```
-60
 150
-155
-215
+100
+100
+100
+160
 ```
