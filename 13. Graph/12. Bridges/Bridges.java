@@ -23,32 +23,30 @@ class Graph {
     }
 
     void bridges () {
-        int[] parent = new int[n];
-        Arrays.fill(parent, -1);
         int[] disc = new int[n];
         Arrays.fill(disc, -1);
         int[] low = new int[n];
         for (int i=0; i<n; i++) {
             if (disc[i] == -1) {
-                dfs(i, disc, low, parent);
+                dfs(i, -1, disc, low);
             }
         }
     }
 
 
-    void dfs (int src, int[] disc, int[] low, int[] parent) {
+    void dfs (int src, int parent, int[] disc, int[] low) {
         disc[src] = low[src] = ++time;
-        for (int child: graph.get(src)) {
-            if (disc[child] == -1) {
-                parent[child] = src;
-                dfs(child, disc, low, parent);
-                low[src] = Math.min(low[src], low[child]);
-                if (low[child] > disc[src]) {
-                    System.out.println(src+" "+child);
-                }
+        for (int adj: graph.get(src)) {
+            if (adj == parent) {continue;}
+            if (disc[adj] != -1) {
+                low[src] = Math.min(low[src], disc[adj]);
             }
-            else if (parent[src] != child) {
-                low[src] = Math.min(low[src], disc[child]);
+            else {
+                dfs(adj, src, disc, low);
+                low[src] = Math.min(low[src], low[adj]);
+                if (low[adj] > disc[src]) {
+                    System.out.println(src+" "+adj);
+                }
             }
         }
     }
@@ -56,7 +54,8 @@ class Graph {
 }
 
 
-class Bridges {
+public class Bridges {
+
 	
     public static void main(String[] args) throws IOException {
     	Graph graph = new Graph(5);
