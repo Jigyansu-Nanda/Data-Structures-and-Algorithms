@@ -8,6 +8,7 @@ class Graph {
     int n;
     ArrayList<ArrayList<Integer>> graph;
     static int time = 0;
+    HashSet<Integer> points;
 
     Graph (int n) {
         this.n = n;
@@ -15,6 +16,7 @@ class Graph {
         for (int i=0; i<n; i++) {
             graph.add(new ArrayList<Integer>());
         }
+        this.points = new HashSet<Integer>();
     }
 
     void addEdge (int a, int b) {
@@ -23,44 +25,37 @@ class Graph {
     }
 
     void artnPoints () {
-        int[] parent = new int[n];
-        Arrays.fill(parent, -1);
-        boolean[] ap = new boolean[n];
         int[] disc = new int[n];
         Arrays.fill(disc, -1);
         int[] low = new int[n];
         for (int i=0; i<n; i++) {
             if (disc[i] == -1) {
-                dfs(i, disc, low, parent, ap);
+                dfs(i, -1, disc, low);
             }
         }
-        for (int i=0; i<n; i++) {
-            if (ap[i]) {
-                System.out.print(i+" ");
-            }
+        for (int x: points) {
+            System.out.println(x);
         }
-        System.out.println();
     }
 
-
-    void dfs (int src, int[] disc, int[] low, int[] parent, boolean[] ap) {
+    void dfs (int src, int parent, int[] disc, int[] low) {
         disc[src] = low[src] = ++time;
         int children = 0;
-        for (int child: graph.get(src)) {
-            if (disc[child] == -1) {
-                children++;
-                parent[child] = src;
-                dfs(child, disc, low, parent, ap);
-                low[src] = Math.min(low[src], low[child]);
-                if (children > 1 && parent[src] == -1) {
-                    ap[src] = true;
-                }
-                if (parent[src] != -1 && low[child] >= disc[src]) {
-                    ap[src] = true;
-                }
+        for (int adj: graph.get(src)) {
+            if (adj == parent) {continue;}
+            if (disc[adj] != -1) {
+                low[src] = Math.min(low[src], disc[adj]);
             }
-            else if (parent[src] != child) {
-                low[src] = Math.min(low[src], disc[child]);
+            else {
+                children++;
+                dfs(adj, src, disc, low);
+                low[src] = Math.min(low[src], low[adj]);
+                if (children > 1 && parent == -1) {
+                    points.add(src);
+                }
+                if (parent != -1 && low[adj] >= disc[src]) {
+                    points.add(src);
+                }
             }
         }
     }
@@ -68,7 +63,7 @@ class Graph {
 }
 
 
-class Main {
+public class Main {
 
 	
     public static void main(String[] args) throws IOException {
