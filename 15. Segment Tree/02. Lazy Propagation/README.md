@@ -9,144 +9,134 @@ Postpone the updates to descendants of a Node until the descendants themselves n
 import java.io.*;
 import java.util.*;
 
-class SegmentTree {
+class Main {
 
-	static int[] lazy;
+    public static void main(String[] args) throws IOException {
+        FileReader input = new FileReader("input.txt");
+		// InputStreamReader input = new InputStreamReader(System.in);
+        In in = new In(input);
+        int n = in.ni();
+        int[] ar = in.ia(n);
+        SgT sgt = new SgT(ar, n);
+        int q = in.ni();
+        for (int i=0; i<q; i++) {
+        	int qr = in.ni();
+        	if (qr == 1) {
+        		int res = sgt.getSum(in.ni(), in.ni());
+        		System.out.println(res);
+        	}
+        	else if (qr == 2) {
+        		int index = in.ni();
+        		int diff = in.ni() - ar[index];
+        		sgt.ru(index, index, diff);
+        	}
+        	else {
+        		sgt.ru(in.ni(), in.ni(), in.ni());
+        	}
+        }
+    }
+}
 
-	static int buildSegmentTree(int[] tree, int[] arr, int start, int end, int index) {
-		if (start == end) {
-			tree[index] = arr[start];
-			return tree[index];
+class SgT {
+
+	int[] ar; 
+	int[] tr, lazy;
+	int n, size;
+
+	SgT (int[] ar, int n) {
+		this.ar = ar;
+		this.n = n;
+		int x = (int) (Math.log(n) / Math.log(2)) + 1;
+		this.size = (1 << (x+1)) + 1;
+		this.tr = new int[size];
+		this.lazy = new int[size];
+		build(0, n-1, 0);
+	}
+
+	void build (int ss, int se, int si) {
+		if (ss == se) {
+			tr[si] = ar[ss];
+			return ;
 		}
-		int mid = start + (end-start)/2;
-		int left = buildSegmentTree(tree, arr, start, mid, (2*index)+1);
-		int right = buildSegmentTree(tree, arr, mid+1, end, (2*index)+2);
-		tree[index] = left + right;
-		return tree[index];
+		int mid = (ss + se) >> 1;
+		build(ss, mid, (si << 1)+1);
+		build(mid+1, se, (si << 1)+2);
+		tr[si]= tr[(si << 1)+1] + tr[(si << 1)+2];
 	}
 
-	static int getSum(int[] tree, int qs, int qe, int start, int end, int index) {
-		if (start > qe || end < qs) {return 0;}
-		if (qs <= start && end <= qe) {return tree[index];}
-		int mid = start + (end-start)/2;
-		int leftSum = getSum(tree, qs, qe, start, mid, (2*index)+1);
-		int rightSum = getSum(tree, qs, qe, mid+1, end, (2*index)+2);
-		return leftSum + rightSum;
+	int getSum (int qs, int qe) {
+		return getSumRec(qs, qe, 0, n-1, 0);
 	}
 
-	static void update(int[] arr, int i, int value, int[] tree) {
-		int diff = value - arr[i];
-		arr[i] = value;
-		int start = 0;
-		int end = arr.length-1;
-		int index = 0;
-		updateUtil(tree, i, diff, start, end, index);
-	}
-
-	static void updateUtil(int[] tree, int i, int diff, int start, int end, int index) {
-		if (i < start || i > end) {return ;}
-		tree[index] += diff;
-		if (end > start) {
-			int mid = start + (end-start)/2;
-			updateUtil(tree, i, diff, start, mid, (2*index)+1);
-			updateUtil(tree, i, diff, mid+1, end, (2*index)+2);
-		}
-	}
-
-	// lazy update
-	static void updateRangeLazy(int[] tree, int qs, int qe, int diff, int start, int end, int index) {
-		// update remaining lazy updates first
-		if (lazy[index] != 0) {
-			tree[index] += (end-start+1)*lazy[index];
-			if (start != end) {
-				lazy[(2*index)+1] += lazy[index];
-				lazy[(2*index)+2] += lazy[index];
+	int getSumRec (int qs, int qe, int ss, int se, int si) {
+		if (lazy[si] != 0) {
+			int dx = lazy[si];
+			lazy[si] = 0;
+			tr[si] += (se - ss + 1)*dx;
+			if (ss != se) {
+				lazy[(si << 1) + 1] += dx;
+				lazy[(si << 1) + 2] += dx;
 			}
-			lazy[index] = 0;
 		}
-		// current range lies completely outside query range
-		if (qe < start || end < qs || start > end) {return ;}
-		// current range lies completely within query range
-		if (qs <= start && end <= qe) {
-			tree[index] += (end-start+1)*diff;
-			if (start != end) {
-				lazy[(2*index)+1] += diff;
-				lazy[(2*index)+2] += diff;
-			}
-			return;
-		}
-		// partial overlap
-		int mid = (start + end) >> 1;
-		updateRangeLazy(tree, qs, qe, diff, start, mid, (2*index)+1);
-		updateRangeLazy(tree, qs, qe, diff, mid+1, end, (2*index)+2);
-		tree[index] = tree[(2*index)+1] + tree[(2*index)+2];
+		if (qs > se || qe < ss) {return 0;}
+		if (qs <= ss && se <= qe) {return tr[si];}
+		int mid = (ss + se) >> 1;
+		return getSumRec(qs, qe, ss, mid, (si<<1)+1) + getSumRec(qs, qe, mid+1, se, (si<<1)+2);
 	}
 
-	static int querySumLazy(int[] tree, int qs, int qe, int start, int end, int index) {
-		// update remaining lazy updates first
-		if (lazy[index] != 0) {
-			tree[index] += (end-start+1)*lazy[index];
-			if (start != end) {
-				lazy[(2*index)+1] += lazy[index];
-				lazy[(2*index)+2] += lazy[index];
-			}
-			lazy[index] = 0;
-		}
-		// current range lies completely outside query range
-		if (qe < start || end < qs || start > end) {return 0;}
-		// current range lies completely within query range
-		if (qs <= start && end <= qe) {
-			return tree[index];
-		}
-		// partial overlap
-		int mid = (start + end) >> 1;
-		int left = querySumLazy(tree, qs, qe, start, mid, (2*index)+1);
-		int right = querySumLazy(tree, qs, qe, mid+1, end, (2*index)+2);
-		return left+right;
+	void ru (int qs, int qe, int val) {
+		ruRec(qs, qe, 0, n-1, 0, val);
 	}
 
-	public static void main(String[] args) throws IOException {
-		int[] arr = {10, 20, 30, 40, 50};
-		int n = arr.length;
-		int size = 4*n;
-		int[] tree = new int[size];
-		lazy = new int[size];
-		Arrays.fill(lazy, 0);
-		buildSegmentTree(tree, arr, 0, n-1, 0);
-		System.out.println(getSum(tree, 0, 2, 0, n-1, 0));
-		System.out.println(getSum(tree, 3, 4, 0, n-1, 0));
-		System.out.println(getSum(tree, 2, 2, 0, n-1, 0));
-		System.out.println(getSum(tree, 1, 4, 0, n-1, 0));
-		System.out.println();
-		updateRangeLazy(tree, 0, 2, 10, 0, n-1, 0);
-		System.out.println(querySumLazy(tree, 0, 2, 0, n-1, 0));
-		System.out.println(querySumLazy(tree, 3, 4, 0, n-1, 0));
-		System.out.println(querySumLazy(tree, 2, 2, 0, n-1, 0));
-		System.out.println(querySumLazy(tree, 1, 4, 0, n-1, 0));
-		System.out.println();
-		updateRangeLazy(tree, 1, 4, 10, 0, n-1, 0);
-		System.out.println(querySumLazy(tree, 0, 2, 0, n-1, 0));
-		System.out.println(querySumLazy(tree, 3, 4, 0, n-1, 0));
-		System.out.println(querySumLazy(tree, 2, 2, 0, n-1, 0));
-		System.out.println(querySumLazy(tree, 1, 4, 0, n-1, 0));
+	void ruRec(int qs, int qe, int ss, int se, int si, int val) {
+		if (lazy[si] != 0) {
+			int dx = lazy[si];
+			lazy[si] = 0;
+			tr[si] += (se - ss + 1)*dx;
+			if (ss != se) {
+				lazy[(si << 1) + 1] += dx;
+				lazy[(si << 1) + 2] += dx;
+			}
+		}
+		if (qs > se || qe < ss) {return;}
+		if (qs <= ss && se <= qe) {
+			tr[si] += (se - ss + 1)*val;
+			if (ss != se) {
+				lazy[(si << 1) + 1] += val;
+				lazy[(si << 1) + 2] += val;
+			}
+			return ;
+		}
+		int mid = (ss + se) >> 1;
+		ruRec(qs, qe, ss, mid, (si << 1)+1, val);
+		ruRec(qs, qe, mid+1, se, (si << 1)+2, val);
+		tr[si] = tr[(si << 1)+1] + tr[(si << 1)+2];
 	}
 }
+}
+```
+
+## input
+```
+6
+1 2 3 4 5 6
+8
+1 2 3
+1 0 5
+1 3 3
+2 4 8
+1 0 5
+3 0 3 5
+1 2 5
+1 3 3
 ```
 
 ## output
 ```
-60
-90
-30
-140
-
-90
-90
-40
-160
-
-110
-110
-50
-200
+7
+21
+4
+24
+31
+9
 ```
