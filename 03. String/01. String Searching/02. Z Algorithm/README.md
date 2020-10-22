@@ -1,6 +1,6 @@
 # Z - Algorithm for Pattern Matching
 The core of the algorithm is:
-  - function **Z(k): longest substring starting at k which is also prefix of the string**
+  - function **Z(k): longest substring starting at k-th index which is also prefix of the string**
   - Example: for string `aabxaayaab`, Z(0 1 2 3 4 5 6 7 8 9) = (0 1 0 0 2 1 0 3 1 0)
   
 ## Naive implementation of Z - array:
