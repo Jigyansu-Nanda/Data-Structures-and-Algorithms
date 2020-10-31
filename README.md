@@ -8,7 +8,7 @@
   5. [Sorting](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/05.%20Sorting)
   6. Linked List
   7. [Stack](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/07.%20Stack)
-  8. Queue
+  8. [Queue](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/08.%20Queue)
   9. Deque
   10. Tree
   11. [Binary Search Tree](https://github.com/Jigyansu-Nanda/Data-Structures-and-Algorithms/tree/master/11.%20Binary%20Search%20Tree)
