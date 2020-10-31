@@ -12,3 +12,70 @@ Queue is a linear data structure,  which follows **FIFO(First In First Out)** or
     - Mail Queue
     
 ## Implementation
+ - **using Circular Array**
+ ```java
+ class MyQueue {
+
+    int capacity, front, size;
+    int[] arr;
+
+    MyQueue (int capacity) {
+        this.arr = new int[capacity];
+        this.capacity = capacity;
+        this.front = 0;
+        this.size = 0;
+    }
+
+    boolean isEmpty () {
+        return (size == 0);
+    }
+
+    boolean isFull () {
+        return (size == capacity);
+    }
+
+    int getRear () {
+        if (isEmpty()) {
+            return 0;
+        } else {
+            return (front + size) % capacity;
+        }
+    }
+
+    void enqueue (int x) {
+        if (isFull()) {
+            System.out.println("Queue is already full !");
+            return;
+        } else {
+            int rear = getRear();
+            arr[rear] = x;
+            rear = (rear + 1) % capacity;
+            size++;
+        }
+    }
+
+    int dequeue () {
+        if (isEmpty()) {
+            return -1;
+        } else {
+            int tmp = arr[front];
+            front = (front + 1) % capacity;
+            size--;
+            return tmp;
+        }
+    }
+
+    int peek () {
+        if (isEmpty()) {
+            return -1;
+        } else {
+            return arr[front];
+        }
+    }
+
+    int getSize () {
+        return size;
+    }
+
+}
+```
