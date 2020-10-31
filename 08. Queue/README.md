@@ -12,7 +12,7 @@ Queue is a linear data structure,  which follows **FIFO(First In First Out)** or
     - Mail Queue
     
 ## Implementation
- - **using Circular Array**
+ 1. **using Circular Array**
  ```java
  class MyQueue {
 
@@ -79,3 +79,73 @@ Queue is a linear data structure,  which follows **FIFO(First In First Out)** or
 
 }
 ```
+
+ 2. **using Linked List**
+ ```java
+ class Node {
+
+    int data;
+    Node next;
+
+    Node (int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class MyQueue {
+
+    Node front;
+    Node rear;
+    int size;
+
+    MyQueue () {
+        this.front = null;
+        this.rear = null;
+        this.size = 0;
+    }
+
+    void enqueue (int x) {
+        Node temp = new Node(x);
+        size++;
+        /* if queue is empty */
+        if (front == null) {
+            front = temp;
+            rear = temp;
+            return ;
+        } else {
+            rear.next = temp;
+            rear = temp;
+        }
+    }
+
+    int dequeue () {
+        /* queue is empty */
+        if (front == null) {
+            System.out.println("empty queue !!!");
+            return -1;
+        }
+        int data = front.data;
+        front = front.next;
+        if (front == null) {rear = front;}
+        size--;
+        return data;
+    }
+
+    int peek () {
+        if (isEmpty()) {
+            System.out.println("empty queue !!!");
+            return -1;
+        }
+        return front.data;
+    }
+
+    boolean isEmpty () {
+        return (size == 0);
+    }
+
+    int getSize () {
+        return size;
+    }
+}
+ ```
