@@ -1,95 +1,112 @@
+import java.io.*;
+import java.util.*;
+
+
 class MinHeap {
 
-	int[] array;
-	int size;
+	int[] heap;
 	int capacity;
+	int size;
 
-	/* constructor */
 	MinHeap (int capacity) {
-		this.array = new int[capacity];
-		this.size = 0;
 		this.capacity = capacity;
+		this.heap = new int[capacity];
+		this.size = 0;
 	}
 
-	/* left of Node at index i */
-	static int left (int i) {return (2*i)+1;}
+	int left (int index) {
+		return (index << 1) + 1;
+	}
 
-	/* right of Node at index i */
-	static int right (int i) {return (2*i)+2;}
+	int right (int index) {
+		return (index << 1) + 2;
+	}
 
-	/* parent of Node at index i */
-	static int parent (int i) {return (i-1)/2;}
+	int parent (int index) {
+		return ((index - 1) >> 1);
+	}
 
-	/* insertion in heap */
-	static void insert (int key) {
-		if (size == capacity) {return ;}
-		array[size] = key;
-		size += 1;
-		int i = size-1;
-		while (i != 0 && array[i] < array[parent(i)]) {
-			swap(array, i, parent(i));
-			i = parent(i);
+	void insert (int value) {
+		if (size == capacity)
+			return;
+		heap[size] = value;
+		int curr_index = size;
+		size++;
+		while (curr_index != 0 && heap[curr_index] < heap[parent(curr_index)]) {
+			swap(curr_index, parent(curr_index));
+			curr_index = parent(curr_index);
 		}
 	}
 
-	/* Heapify */
-	static void heapify (int index) {
-		if (index >= size) {return ;}
-		int smaller = index;
+	void heapify (int index) {
+		if (index >= size)
+			return;
+		int smallest = index;
 		int leftChild = left(index);
 		int rightChild = right(index);
-		if (array[leftChild] < array[smaller]) {
-			smaller = leftChild;
+		if (leftChild < size && heap[leftChild] < heap[smallest]) {
+			smallest = leftChild;
 		}
-		if (array[rightChild] < array[smaller]) {
-			smaller = rightChild;
+		if (rightChild < size && heap[rightChild] < heap[smallest]) {
+			smallest = rightChild;
 		}
-		while (smaller != index) {
-			swap(array, smaller, index);
-			heapify(smaller);
+		if (smallest != index) {
+			swap(smallest, index);
+			heapify(smallest);
 		}
 	}
 
-	/* Extract minimum */
-	static int extractMin () {
-		if (size == 0) {return Integer.MAX_VALUE;}
-		int minValue = array[0];
-		swap(array, 0, size-1);
+	int extractMinimum () {
+		if (size == 0)
+			return Integer.MAX_VALUE;
+		int min_value = heap[0];
+		swap(0, size - 1);
 		size--;
 		heapify(0);
-		return minValue;
+		return min_value;
 	}
 
-	/* Decrease Key */
-	static void decreaseKey (int index, int value) {
-		if (index >= size) {return ;}
-		array[index] = value;
-		while (index != 0 && array[index] < array[parent(index)]) {
-			swap(array, index, parent(index));
+	void decreaseKey (int index, int new_value) {
+		if (index >= size || index < 0)
+			return;
+		heap[index] = new_value;
+		while (index != 0 && heap[index] < heap[parent(index)]) {
+			swap(index, parent(index));
 			index = parent(index);
 		}
 	}
 
-	/* Delete Key */
-	static void deleteKey (int index) {
+	void delete (int index) {
+		if (index < 0 || index >= size)
+			return ;
 		decreaseKey(index, Integer.MIN_VALUE);
-		extractMin();
+		extractMinimum();
 	}
 
-	/* Build heap */
-	static void buildHeap () {
+	void buildHeap () {
 		for (int i = (size - 2) / 2; i >= 0; i--) {
 			heapify(i);
 		}
 	}
 
-	static void swap(int[] array, int index1, int index2) {
-		int tmp = array[index1];
-		array[index1] = array[index2];
-		array[index2] = tmp;
+	void swap (int index1, int index2) {
+		int tmp = heap[index1];
+		heap[index1] = heap[index2];
+		heap[index2] = tmp;
 	}
 
 	public static void main(String[] args) {
-		/* driver code */
+		MinHeap obj = new MinHeap(5);
+		obj.insert(12);
+		obj.insert(23);
+		obj.insert(3);
+		obj.insert(-12);
+		obj.insert(36);
+		System.out.println(obj.extractMinimum());
+		System.out.println(obj.extractMinimum());
+		System.out.println(obj.extractMinimum());
+		obj.decreaseKey(1, 30);
+		System.out.println(obj.extractMinimum());
+		System.out.println(obj.extractMinimum());
 	}
 }
